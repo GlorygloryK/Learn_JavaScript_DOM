@@ -1,9 +1,9 @@
-// file: index.js
+// file: index.js (index.html has script with src as index.js (current file))
 
-console.log("Hello from JavaScript :)");
-alert("This is an alert box! Click ok to close ");
+console.log("Hello from JavaScript :)"); // This message will be seen on console of the browser (at the developer tools)
+alert("This is an alert box! Click ok to close "); // alert will be seen as soon as you go onto the browser and user will be prompted to click the button to close the alert 
 
-
+// 1) <<<<<<<<<<<<<<<<<<<<<<<<<<<<-MANIPULATING THE DOM ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const body = document.querySelector("body"); // This identifies the body of the DOM for index.html , which previously linked via <script></script> tag
 
 
@@ -27,7 +27,7 @@ recipeList.appendChild(item3); // append list item into ul
 body.appendChild(recipeList);
 
 
-// SEING FETCH REQUESTS:
+// 2)<<<<<<<<<<<<<<<<<<<<<<<<<<<<-FETCH REQUESTS: ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // and consol.logging them (should see it on the terminal)
 //  url to be used = https://jsonplaceholder.typicode.com/todos/1
 
@@ -62,6 +62,7 @@ type: "general"
 //  <--------------------------------------->
 
 //EXAMPLE 2(b)-> Getting a Random joke out from the json (joke API):
+
 fetch(another_url)
     .then((response) => response.json())
     .then((joke)=>{
@@ -92,3 +93,98 @@ fetch(another_url) // use the fetch method, like above...
     });
 
 
+ //  <--------------------------------------->
+// 3 (a)<<<<<<<<<<<<<<<<<<<<<<<<<<<<- EVENT LISTENERS : ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// The "listener" is a function that will be called whenever the event "happens". e.g. For example, we can attach a function to be executed whenever the user clicks on the button with a specific id 
+//We use JavaScript event listeners to run code when the user interacts with the page (e.g clicking on a button)
+
+//2 steps for approaching this:
+// 1. Get the DOM element (e.g. document.querySelector, etc.)
+// 2. Attaching the event listener
+
+/* EXAMPLE
+
+STEP 1...
+const buttonEl = document.querySelector('#my-button'); 
+
+THEN STEP 2...
+buttonEl.addEventListener('click', () => {
+  // this will execute when the user clicks on the button
+  console.log('clicked!');
+});
+
+OR SHORTER SYNTAX (FOR STEP 2):
+document.querySelector('#my-button').addEventListener('click', () => {
+  console.log('clicked!');
+});
+
+NOTE :  the addEventListener has been called for the event to be handled at all.
+EXAMPLE:
+// This function will attach the event listener when called 
+const attachListener = () => {
+  document.querySelector('#my-button').addEventListener('click', () => {
+    console.log('clicked!');
+  });
+}
+
+// If the user clicks on the button now, nothing will happen (yet)
+
+// ...
+
+// Later, we call the function defined previously
+attachListener();
+
+// The click is now handled
+
+*/
+
+
+// TASK -> Take your joke code from the previous section, and adapt it so that the punchline to the joke is only shown after the user clicks a button.
+
+//STEP 1 : Add a button to the html, that a person(user) can click on  why button? because i've chosen my event listener to 'wait' for the user action of clicking and need something for the user to click on. Once button added to index.html file , follow step 2
+
+//STEP 2: Add something to 'identify' the button e.g. an id . I've named my id "button" 
+//STEP 3 : 'identify the component you want to attach an event listener to 
+
+const listening_button = document.getElementById("button") //document.querySelector("button") works just fine too, althogh the more specific the better in the long-run
+
+//STEP 4 : CREATE event listener , that 'waits' for click on the button you identified earlier on
+listening_button.addEventListener('click', () => {
+    console.log("You've gone and clicked the button! :D");
+});
+
+// STEP 5:
+const exampleListener = () => {
+    // copy paste the event listener from step 4 here:
+    listening_button.addEventListener('click', () => {
+        console.log("You've gone and clicked the button! :D");
+    });
+}
+
+
+//STEP 6 : CLICK ON THE BUTTON! Having opened the developer tool - you should see the console put out the message aboves
+
+const joke_appears_on_button_click = () => {
+    listening_button.addEventListener('click', () => {
+        // will put the joke in a h2 element to see it works
+        fetch(another_url) // use the fetch method, like above...
+            .then((response) => response.json())
+            .then((joke)=>{
+                document.querySelector("h2").innerText  = joke["setup"] + "\n"; 
+                document.querySelector("h2").innerText  += joke["punchline"];
+    });
+    });
+}
+
+
+// 3 (a) Take your joke code from the previous section, and adapt it so that the punchline to the joke is only shown after the user clicks a button.
+
+
+
+
+
+
+/*  ************** NOTE : Event listeners are NOT limited to clicks! ****************** 
+There are an enormous number of events available for us to listen for, everything from mouse clicks, key strokes, and scrolling, to rotating your device, printing the page or even plugging in a gamepad!
+****************************************************************************************
+*/
