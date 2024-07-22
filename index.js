@@ -80,3 +80,15 @@ index.js:65 They are always negative. */
 //EXAMPLE 2(c)-> Getting a Random joke out from the json (joke API) ONTO web page:
 /* Combine your code in the exercise above with the DOM manipulation from last section 
 to create a page that displays a random joke each time you visit it. */
+
+const joke_generator = document.querySelector("p") // This is where i'll put in the joke (index.html)
+
+fetch(another_url) // use the fetch method, like above...
+    .then((response) => response.json())
+    .then((joke)=>{
+        joke_generator.textContent = "Joke of the Day: \n" // but instead of console.logging here you make this the text content of whatever you decided to query selector (i.e. what part of the DOM you 'honed into' to add content to)
+        joke_generator.textContent += joke["setup"] + "\n"; 
+        joke_generator.textContent += joke["punchline"];
+    });
+
+
